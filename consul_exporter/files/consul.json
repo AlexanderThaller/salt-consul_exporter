@@ -1,0 +1,1 @@
+{"service": {"name": "consul_exporter", "tags": ["golang"], "port": 80}}
