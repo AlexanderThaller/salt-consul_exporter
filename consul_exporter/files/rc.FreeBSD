@@ -32,7 +32,7 @@ load_rc_config $name
 pidfile=/var/run/consul_exporter.pid
 procname="/usr/local/bin/consul_exporter"
 command="/usr/sbin/daemon"
-command_args="-f -p ${pidfile} ${procname} -consul.server ${consul_exporter_consul_server} -web.listen-address ${consul_exporter_web_listenaddress}"
+command_args="-r -f -p ${pidfile} ${procname} -consul.server ${consul_exporter_consul_server} -web.listen-address ${consul_exporter_web_listenaddress}"
 
 start_precmd=consul_exporter_startprecmd
 
