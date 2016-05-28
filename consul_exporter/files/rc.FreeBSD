@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# $FreeBSD: branches/2016Q2/sysutils/consul_exporter/files/consul_exporter.in 386655 2015-05-18 02:05:03Z swills $
+#
+# PROVIDE: consul_exporter
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# consul_exporter_enable (bool):	Set to NO by default.
+#				Set it to YES to enable consul_exporter.
+# consul_exporter_user (user):        Set user to run consul_exporter.
+#                               Default is "consul".
+# consul_exporter_group (group):      Set group to run consul_exporter.
+#                               Default is "consul".
+
+. /etc/rc.subr
+
+name=consul_exporter
+rcvar=consul_exporter_enable
+
+load_rc_config $name
+
+: ${consul_exporter_enable:="NO"}
+: ${consul_exporter_user:="consul"}
+: ${consul_exporter_group:="consul"}
+: ${consul_exporter_consul_server:="localhost:8500"}
+
+pidfile=/var/run/consul_exporter.pid
+procname="/usr/local/bin/consul_exporter"
+command="/usr/sbin/daemon"
+command_args="-f -p ${pidfile} ${procname} -consul.server ${consul_exporter_consul_server}"
+
+start_precmd=consul_exporter_startprecmd
+
+consul_exporter_startprecmd()
+{
+        if [ ! -e ${pidfile} ]; then
+                install -o ${consul_exporter_user} -g ${consul_exporter_group} /dev/null ${pidfile};
+        fi
+
+        if [ ! -d ${consul_exporter_dir} ]; then
+                install -d -o ${consul_exporter_user} -g ${consul_exporter_group} ${consul_exporter_dir}
+        fi
+
+}
+
+run_rc_command "$1"

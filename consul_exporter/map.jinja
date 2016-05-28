@@ -1,0 +1,12 @@
+{% set lookup = salt['grains.filter_by'](
+  {
+    'FreeBSD': {
+      'bin_path': '/usr/local/bin',
+      'rc_path': '/usr/local/etc/rc.d',
+      'service': 'consul_exporter',
+    },
+  },
+  grain='os_family',
+  merge=salt['pillar.get']('consul:lookup'),
+  default='unset'
+) %}
