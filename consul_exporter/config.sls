@@ -10,5 +10,5 @@ consul_exporter.config:
     - append_if_not_found: True
     - content: |
         # MANAGED BY SALT DO NOT EDIT
-        consul_exporter_consul_server="{{ salt['pillar.get']('consul:bind_addr') | default('localhost') }}:8500"
+        consul_exporter_consul_server="{{ salt['pillar.get']('consul:bind_addr', "localhost") }}:8500"
 {% endif %}
