@@ -11,4 +11,5 @@ consul_exporter.config:
     - content: |
         # MANAGED BY SALT DO NOT EDIT
         consul_exporter_consul_server="{{ salt['pillar.get']('consul:bind_addr', "localhost") }}:8500"
+        consul_exporter_web_listenaddress="{{ salt['pillar.get']('consul_exporter:web_listen-address', ":9107") }}"
 {% endif %}
