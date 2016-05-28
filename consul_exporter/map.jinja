@@ -8,6 +8,6 @@
     },
   },
   grain='os_family',
-  merge=salt['pillar.get']('consul:lookup'),
+  merge=salt['pillar.get']('consul_exporter:lookup'),
   default='unset'
 ) %}
